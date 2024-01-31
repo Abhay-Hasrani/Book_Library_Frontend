@@ -3,9 +3,11 @@ import "./App.css";
 import AuthForm from "./components/auth/AuthForm";
 import Header from "./components/header/Header";
 import { Route, Routes } from "react-router-dom";
+import BookList from "./components/Books/all-book-list/BookList";
+import BookDetail from "./components/Books/book-detail/BookDetail";
 
 function App() {
-  const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(true);
 
   function onLogInClicked() {
     setIsLogged(true);
@@ -17,22 +19,20 @@ function App() {
   }
   return (
     <>
+      <Header onLogOutClicked={onLogOutClicked} isLogged={isLogged} />
       <Routes>
         <Route
           path="/"
           element={
             <>
-              <Header onLogOutClicked={onLogOutClicked} isLogged={isLogged} />
               {!isLogged && <AuthForm onLogInClicked={onLogInClicked} />}
+              {isLogged && <BookList />}
             </>
           }
         />
         {isLogged && (
           <>
-            <Route
-              path="/home"
-              element={<h1>Add the BookList element here</h1>}
-            />
+            <Route path="/books/:bookId" element={<BookDetail />} />
           </>
         )}
         <Route

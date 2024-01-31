@@ -10,11 +10,13 @@ const Header = (props) => {
     <Navbar className={styles.navbar} data-bs-theme="dark" fixed>
       <Container>
         <Navbar.Brand className={`${styles.brand} fs-1`} href="#home">
-          Hiver Book Store
+          Hiver Book Library
         </Navbar.Brand>
         {props.isLogged && (
-          <Nav className="m-auto">
-            <Nav.Link as={NavLink} to="/home">Home</Nav.Link>
+          <Nav className={styles["custom-nav"]}>
+            <Nav.Link as={NavLink} to="/">Home</Nav.Link>
+            <Nav.Link as={NavLink} to="/">My Books</Nav.Link>
+            <Nav.Link as={NavLink} to="/">Add Books</Nav.Link>
             <Nav.Link className="text-danger" onClick={props.onLogOutClicked}>Log Out</Nav.Link>
           </Nav>
         )}

@@ -3,6 +3,17 @@
     height: 5rem;
 }
 
-/* .brand{
-    font-size: 30px;
-} */
+.brand{
+    color: antiquewhite;
+}
+
+.custom-nav{
+    flex-grow: 1.5;
+    display: flex;
+    justify-content: space-around;
+    font-size: large;
+}
+
+.custom-nav .nav-link:hover{
+    color: #240046;
+}
