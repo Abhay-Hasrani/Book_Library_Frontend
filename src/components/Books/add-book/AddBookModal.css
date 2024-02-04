@@ -1,0 +1,65 @@
+.modal-body {
+  background-color: antiquewhite;
+}
+.form {
+  background-color: antiquewhite;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signup {
+  color: #6d44b8;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: block;
+  font-weight: bold;
+  font-size: 30px;
+  margin-bottom: 0.5em;
+  font-family: "Bentham", serif;
+}
+
+.form--input {
+  width: 100%;
+  margin-bottom: 1.25em;
+  height: 40px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  padding: 0.8em;
+  font-family: "Inter", sans-serif;
+  outline: none;
+}
+
+.form--input:focus {
+  border: 1px solid #639;
+  outline: none;
+}
+
+.input--textarea {
+  height: 6rem;
+}
+
+.button-box {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form--submit {
+  width: 50%;
+  padding: 0.625em;
+  border-radius: 5px;
+  color: #639;
+  background-color: white;
+  border: 1px solid #639;
+  cursor: pointer;
+}
+
+.form--submit:hover {
+  color: white;
+  background-color: #639;
+  border: 1px dashed #639;
+  cursor: pointer;
+  transition: 0.5s;
+}
