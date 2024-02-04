@@ -1,5 +1,5 @@
-import Book from "./Book";
-import styles from "./BookList.module.css";
+import MyBooksListElement from "./MyBooksElement";
+import styles from "./MyBooksList.module.css";
 
 const books = [
   {
@@ -105,15 +105,15 @@ const books = [
   },
 ];
 
-const BookList = () => {
-  const bookList = books.map((book) => {
+const MyBooksList = () => {
+  const myBookList = books.map((book) => {
     return (
       <li key={Math.random()} className="m-2">
-        <Book book={book} />
+        <MyBooksListElement book={book} />
       </li>
     );
   });
-  return <ul className={styles["book-list"]}>{bookList}</ul>;
-};
 
-export default BookList;
+  return <ul className={styles["my-book-list"]}>{myBookList}</ul>;
+};
+export default MyBooksList;

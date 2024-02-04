@@ -4,7 +4,6 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import styles from "./Header.module.css";
 import { NavLink } from "react-router-dom";
-import { Button } from "react-bootstrap";
 import AddBookModal from "../books/add-book/AddBookModal";
 
 const Header = (props) => {
@@ -25,16 +24,19 @@ const Header = (props) => {
             <Nav.Link as={NavLink} to="/">
               Home
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/">
+            <Nav.Link as={NavLink} to="/my-books">
               My Books
             </Nav.Link>
-            <Nav.Link as={NavLink} onClick={toggleAddBookModal}>
+            <Nav.Link as={NavLink} onClick={toggleAddBookModal} to="/">
               Add Books
             </Nav.Link>
             <AddBookModal
               showAddBookModal={showAddBookModal}
               toggleAddBookModal={toggleAddBookModal}
             />
+            <Nav.Link as={NavLink} to="/requests">
+              Books requests
+            </Nav.Link>
             <Nav.Link className="text-danger" onClick={props.onLogOutClicked}>
               Log Out
             </Nav.Link>
