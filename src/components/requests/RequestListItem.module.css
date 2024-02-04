@@ -1,0 +1,104 @@
+body {
+  background-color: #fdf1ec;
+}
+
+.wrapper {
+  height: 200px;
+  width: 50rem;
+  margin: 10px auto;
+  background-color: antiquewhite;
+  border: 1px rgb(106, 103, 103);
+  border-radius: 7px 7px 7px 7px;
+  transition: box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.wrapper:hover {
+  -webkit-box-shadow: 0px 14px 32px 0px rgb(123, 48, 194);
+  -moz-box-shadow: 0px 14px 32px 0px rgb(123, 48, 194);
+  box-shadow: 0px 14px 32px 0px rgb(123, 48, 194);
+}
+
+.book-text {
+  height: 9rem;
+  width: 327px;
+}
+
+.book-text h1 {
+  margin: 0 0 0 38px;
+  padding-top: 20px;
+  font-size: 34px;
+  color: #240046;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.book-text h1,
+.book-btn-box p {
+  font-family: "Bentham", serif;
+}
+
+.book-text h2 {
+  margin: 0 0 0 38px;
+  font-size: 15px;
+  font-family: "Raleway", sans-serif;
+  font-weight: bolder;
+  text-transform: uppercase;
+  color: #b25959;
+  letter-spacing: 0.2em;
+}
+.book-text h2 span {
+  font-size: 13px;
+  height: max-content;
+}
+
+.book-text p {
+  height: 125px;
+  /* margin: 15px 0 0 38px; */
+  font-family: "Playfair Display", serif;
+  color: #8d8d8d;
+  line-height: 1.7em;
+  font-size: 15px;
+  font-weight: lighter;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.book-btn-box {
+  height: max-content;
+  width: 25rem;
+  /* margin: 20px 0; */
+  /* position: relative; */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.book-btn-box button {
+  /* float: right; */
+  height: 3rem;
+  width: 10rem;
+  margin: 0 8px 0 8px;
+  box-sizing: border-box;
+  border: transparent;
+  border-radius: 60px;
+  font-family: "Raleway", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: #ffffff;
+  background-color: rgb(123, 48, 194);
+  outline: none;
+}
+
+.book-btn-box .accept {
+  background-color: rgb(4, 124, 4);
+  cursor: pointer;
+}
+
+.book-btn-box .reject {
+  background-color: rgb(222, 30, 30);
+}

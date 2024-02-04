@@ -1,5 +1,5 @@
-import Book from "./Book";
-import styles from "./BookList.module.css";
+import RequestListItem from "./RequestListItem";
+import styles from "./RequestList.module.css";
 
 const books = [
   {
@@ -105,15 +105,15 @@ const books = [
   },
 ];
 
-const BookList = () => {
-  const bookList = books.map((book) => {
+const RequestList = () => {
+  const requestList = books.map((book) => {
     return (
       <li key={Math.random()} className="m-2">
-        <Book book={book} />
+        <RequestListItem book={book} />
       </li>
     );
   });
-  return <ul className={styles["book-list"]}>{bookList}</ul>;
-};
 
-export default BookList;
+  return <ul className={styles["request-list"]}>{requestList}</ul>;
+};
+export default RequestList;
