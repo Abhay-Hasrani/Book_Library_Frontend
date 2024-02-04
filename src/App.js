@@ -3,8 +3,8 @@ import "./App.css";
 import AuthForm from "./components/auth/AuthForm";
 import Header from "./components/header/Header";
 import { Route, Routes } from "react-router-dom";
-import BookList from "./components/Books/all-book-list/BookList";
-import BookDetail from "./components/Books/book-detail/BookDetail";
+import BookList from "./components/books/all-book-list/BookList";
+import BookDetail from "./components/books/book-detail/BookDetail";
 
 function App() {
   const [isLogged, setIsLogged] = useState(true);
