@@ -1,39 +1,51 @@
 import { useState } from "react";
 import styles from "./AuthForm.module.css";
-const AuthForm = (props) => {
+import BookUrls from "../../utils/BookUrl";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/AuthReducer";
+
+const AuthForm = () => {
   const [showSignUpForm, setShowSignUpForm] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const dispatch = useDispatch();
 
-  async function onLoginClickHandler(e) {
+  const onLoginClickHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
+    const role = isAdmin ? "Admin" : "Student";
+    formData.append("role", role);
     const userData = {};
     for (const [name, value] of formData.entries()) userData[name] = value;
     console.log(userData);
     try {
-      // const res = await axios.post(BookUrl.logInUrl, userData);
-      // localStorage.setItem("token", res.data.token);
-      props.onLogInClicked();
-      console.log("Welcome ", userData.email);
+      const res = await axios.post(BookUrls.LOGIN_URL, userData);
+      console.log(res.data);
+      const token = res.data.access_token;
+      dispatch(authActions.login({ token }));
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
-  async function onSignUpClickHandler(e) {
+  const onSignUpClickHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
+    const role = isAdmin ? "Admin" : "Student";
+    formData.append("role", role);
     const userData = {};
     for (const [name, value] of formData.entries()) userData[name] = value;
     console.log(userData);
     try {
-      // const res = await axios.post(BookUrl.signUpUrl, userData);
-      alert("User Created Successfully. Please Login!!!")
+      const res = await axios.post(BookUrls.SIGNUP_URL, userData);
+      alert("User Created Successfully. Please Login!!!");
       setShowSignUpForm(false);
-      console.log("user created redirect to login");
+      e.target.reset();
+      // console.log("user created redirect to login ",res.data );
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   return (
     <div className={styles["auth-form-box"]}>
@@ -45,6 +57,16 @@ const AuthForm = (props) => {
           checked={showSignUpForm}
           onChange={() => setShowSignUpForm(!showSignUpForm)}
         />
+        <div className="d-flex m-3">
+          <h5 className="text-light me-2">Student</h5>
+          <input
+            className={styles["switch"]}
+            type="checkbox"
+            checked={isAdmin}
+            onChange={() => setIsAdmin(!isAdmin)}
+          />
+          <h5 className="text-light ms-2">Admin</h5>
+        </div>
 
         <div className={styles.login}>
           <form
@@ -57,9 +79,9 @@ const AuthForm = (props) => {
             </label>
             <input
               className={styles.input}
-              type="email"
-              name="email"
-              placeholder="Email"
+              type="text"
+              name="username"
+              placeholder="Username"
               required
             />
             <input

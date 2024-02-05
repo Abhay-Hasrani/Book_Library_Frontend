@@ -7,41 +7,37 @@ import BookList from "./components/books/all-book-list/BookList";
 import BookDetail from "./components/books/book-detail/BookDetail";
 import RequestList from "./components/requests/RequestList";
 import MyBooksList from "./components/books/my-books/MyBooksList";
+import { useSelector } from "react-redux";
 
 function App() {
-  const [isLogged, setIsLogged] = useState(true);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const user = useSelector((state) => state.auth.user);
 
-  function onLogInClicked() {
-    setIsLogged(true);
-  }
-
-  function onLogOutClicked() {
-    localStorage.clear();
-    setIsLogged(false);
-  }
   return (
     <>
-      <Header onLogOutClicked={onLogOutClicked} isLogged={isLogged} />
+      <Header />
       <Routes>
         <Route
           path="/"
           element={
             <>
-              {!isLogged && <AuthForm onLogInClicked={onLogInClicked} />}
-              {isLogged && <BookList />}
+              {!isLoggedIn && <AuthForm />}
+              {isLoggedIn && <BookList />}
             </>
           }
         />
-        {isLogged && (
+        {isLoggedIn && (
           <>
             <Route path="/books/:bookId" element={<BookDetail />} />
             <Route path="/my-books" element={<MyBooksList />} />
-            <Route path="/requests" element={<RequestList />} />
+            {user.role === "Admin" && (
+              <Route path="/requests" element={<RequestList />} />
+            )}
           </>
         )}
         <Route
           path="*"
-          element={<h1>Sorry This route is not available at the moment</h1>}
+          element={<h1>Opps!!! You dont have right permissions.</h1>}
         />
       </Routes>
     </>
