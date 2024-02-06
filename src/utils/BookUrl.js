@@ -10,4 +10,9 @@ BookUrls.LOGIN_URL = BookUrls.BASE_URL + "/auth/token"
 BookUrls.BOOKS_URL = BookUrls.BASE_URL + "/books"
 BookUrls.POST_BOOK_URL = BookUrls.BOOKS_URL + "/post-book"
 
+//request
+BookUrls.REQUESTS_URL  = BookUrls.BASE_URL + "/requests"
+BookUrls.PUT_REQUEST_STATUS_URL  = BookUrls.REQUESTS_URL + "/put-request-status"
+
+
 export default BookUrls;

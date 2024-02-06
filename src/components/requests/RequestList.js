@@ -1,5 +1,8 @@
 import RequestListItem from "./RequestListItem";
 import styles from "./RequestList.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllRequests } from "../../store/RequestsReducer";
+import { useEffect } from "react";
 
 const books = [
   {
@@ -106,6 +109,13 @@ const books = [
 ];
 
 const RequestList = () => {
+  const dispatch = useDispatch();
+  const mbooks = useSelector((state) => state.request.requests);
+
+  useEffect(() => {
+    dispatch(getAllRequests());
+  }, [dispatch]);
+
   const requestList = books.map((book) => {
     return (
       <li key={Math.random()} className="m-2">
