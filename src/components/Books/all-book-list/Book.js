@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 const Book = (props) => {
   const bookObj = props.book;
   const navigate = useNavigate();
+
   function detailsClickHandler() {
-    navigate(`/books/1}`);
+    navigate(`/books/${bookObj.id}`);
   }
   return (
     <div className={styles.wrapper}>
@@ -28,14 +29,13 @@ const Book = (props) => {
           <p>{bookObj.description}</p>
         </div>
         <div className={styles["rating-box"]}>
-          {/* <div className={styles.available}>(5 left)</div> */}
           <Rating rating={bookObj.rating} />
         </div>
         <div className={styles["book-btn-box"]}>
           <button type="button" onClick={detailsClickHandler}>
             Details
           </button>
-          <button type="button">Add</button>
+          <button type="button">Request</button>
         </div>
       </div>
     </div>

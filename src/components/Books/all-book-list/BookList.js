@@ -10,11 +10,7 @@ import axios from "axios";
 
 const BookList = () => {
   const dispatch = useDispatch();
-  const myToken = useSelector((state) => state.auth.token);
   const books = useSelector((state) => state.book.books);
-
-  //set the deafult header Authorisation so as to not to put it again
-  axios.defaults.headers.common["Authorization"] = "Bearer " + myToken;
 
   useEffect(() => {
     dispatch(getAllBooks());

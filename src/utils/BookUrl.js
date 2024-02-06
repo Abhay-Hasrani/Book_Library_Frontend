@@ -9,6 +9,7 @@ BookUrls.LOGIN_URL = BookUrls.BASE_URL + "/auth/token"
 //books
 BookUrls.BOOKS_URL = BookUrls.BASE_URL + "/books"
 BookUrls.POST_BOOK_URL = BookUrls.BOOKS_URL + "/post-book"
+BookUrls.BOOK_URL = BookUrls.BASE_URL + "/books/" // (+ bookId) add book id parameter
 
 //request
 BookUrls.REQUESTS_URL  = BookUrls.BASE_URL + "/requests"
