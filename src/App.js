@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./App.css";
 import AuthForm from "./components/auth/AuthForm";
 import Header from "./components/header/Header";
