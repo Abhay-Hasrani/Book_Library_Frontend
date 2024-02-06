@@ -1,7 +1,6 @@
 // authSlice.js
 
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
 // Load initial state from local storage if available
@@ -15,16 +14,16 @@ const initialState = {
     : false,
 };
 
-const authSlice = createSlice({
+const AuthSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     login(state, action) {
       state.isLoggedIn = true;
       const myToken = action.payload.token;
-      //set token and also authorisation header in axios
+      //set token and also global authorisation header in axios
       state.token = myToken;
-      axios.defaults.headers.common["Authorization"] = myToken;
+      // axios.defaults.headers.common["Authorization"] = "Bearer "+ myToken;
       //decode jwt to get user details
       const userDetails = jwtDecode(myToken);
       state.user = userDetails;
@@ -45,6 +44,6 @@ const authSlice = createSlice({
   },
 });
 
-export const authActions = authSlice.actions;
+export const authActions = AuthSlice.actions;
 
-export default authSlice.reducer;
+export default AuthSlice.reducer;

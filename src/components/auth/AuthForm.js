@@ -37,7 +37,7 @@ const AuthForm = () => {
     for (const [name, value] of formData.entries()) userData[name] = value;
     console.log(userData);
     try {
-      const res = await axios.post(BookUrls.SIGNUP_URL, userData);
+      await axios.post(BookUrls.SIGNUP_URL, userData);
       alert("User Created Successfully. Please Login!!!");
       setShowSignUpForm(false);
       e.target.reset();
