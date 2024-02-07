@@ -95,10 +95,24 @@ body {
 }
 
 .book-btn-box .accept {
-  background-color: rgb(4, 124, 4);
+  background-color: rgb(4, 124, 4, 1);
+  cursor: pointer;
+}
+
+.book-btn-box .accept-active {
+  background-color: rgb(4, 124, 4, 0.5);
   cursor: pointer;
 }
 
 .book-btn-box .reject {
-  background-color: rgb(222, 30, 30);
+  background-color: rgb(222, 30, 30, 1);
+}
+
+.book-btn-box .reject-active {
+  background-color: rgb(222, 30, 30, 0.5);
+}
+
+.user-detail {
+  margin: 1rem 0 0 2.4rem;
+  font-size: 11px;
 }

@@ -1,5 +1,5 @@
 import styles from "./Book.module.css";
-import Rating from "../../UI/RatingElements/Rating";
+import Rating from "../../ui/rating-elements/Rating";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { postRequest } from "../../../store/RequestsReducer";

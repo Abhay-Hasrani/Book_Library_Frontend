@@ -101,13 +101,21 @@ body {
 
 .book-btn-box .rejected {
   background-color: rgb(230, 113, 113);
+  cursor: not-allowed;
 }
 
 .book-btn-box .pending {
   background-color: lightgray;
   color: black;
+  cursor: not-allowed;
 }
 
 .book-btn-box .returned {
   background-color: rgb(133, 158, 139);
+  cursor: not-allowed;
+}
+
+.user-detail {
+  margin: 1rem 0 0 2.4rem;
+  font-size: 11px;
 }

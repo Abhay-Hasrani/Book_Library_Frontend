@@ -35,14 +35,16 @@ export const getAllRequests = () => async (dispatch) => {
  * */
 export const postRequest = (bookId) => async (dispatch) => {
   try {
-    const res = await axios.post(BookUrls.POST_REQUEST_URL, { book_id: bookId });
+    const res = await axios.post(BookUrls.POST_REQUEST_URL, {
+      book_id: bookId,
+    });
     // console.log(res.data);
     dispatch(requestsActions.addRequest({ request: res.data.user_book }));
+    alert("Request Sent Successfully");
   } catch (error) {
-    console.log(error)
-    alert("Request already exists")
+    console.log(error);
+    alert("Request already exists");
   }
-  // dispatch(requestsActions.addRequest({ request: res.data.request }));
 };
 
 export const requestsActions = RequestsSlice.actions;

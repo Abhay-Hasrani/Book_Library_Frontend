@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import Rating from "../../UI/RatingElements/Rating";
+import Rating from "../../ui/rating-elements/Rating";
 import styles from "./BookDetail.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import BookUrls from "../../../utils/BookUrl";
-import LoadingIndicator from "../../UI/loading-indicator/LoadingIndicator";
+import LoadingIndicator from "../../ui/loading-indicator/LoadingIndicator";
 import { useDispatch } from "react-redux";
 import { postRequest } from "../../../store/RequestsReducer";
 
