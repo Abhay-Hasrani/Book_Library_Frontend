@@ -1,12 +1,21 @@
 import styles from "./Book.module.css";
-import Rating from "../../UI/RatingElements/Rating";
+import Rating from "../../ui/rating-elements/Rating";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { postRequest } from "../../../store/RequestsReducer";
 const Book = (props) => {
   const bookObj = props.book;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   function detailsClickHandler() {
-    navigate(`/books/1}`);
+    navigate(`/books/${bookObj.id}`);
   }
+
+  const requestClickHandler = () => {
+    dispatch(postRequest(bookObj.id));
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles["book-img"]}>
@@ -28,14 +37,15 @@ const Book = (props) => {
           <p>{bookObj.description}</p>
         </div>
         <div className={styles["rating-box"]}>
-          {/* <div className={styles.available}>(5 left)</div> */}
           <Rating rating={bookObj.rating} />
         </div>
         <div className={styles["book-btn-box"]}>
           <button type="button" onClick={detailsClickHandler}>
             Details
           </button>
-          <button type="button">Add</button>
+          <button type="button" onClick={requestClickHandler}>
+            Request
+          </button>
         </div>
       </div>
     </div>

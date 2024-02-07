@@ -14,7 +14,7 @@ const BooksSlice = createSlice({
       state.books = action.payload.books;
     },
     addBook: (state, action) => {
-        state.books = [...state.books, action.payload.book];
+      state.books = [action.payload.book, ...state.books];
     },
   },
 });

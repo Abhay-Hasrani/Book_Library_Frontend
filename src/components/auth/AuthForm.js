@@ -9,18 +9,14 @@ const AuthForm = () => {
   const [showSignUpForm, setShowSignUpForm] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const dispatch = useDispatch();
+  const adminToggleVisibility = showSignUpForm ? "visible" : "invisible";
 
   const onLoginClickHandler = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const role = isAdmin ? "Admin" : "Student";
-    formData.append("role", role);
-    const userData = {};
-    for (const [name, value] of formData.entries()) userData[name] = value;
-    console.log(userData);
     try {
-      const res = await axios.post(BookUrls.LOGIN_URL, userData);
-      console.log(res.data);
+      const res = await axios.post(BookUrls.LOGIN_URL, formData);
+      // console.log(res.data);
       const token = res.data.access_token;
       dispatch(authActions.login({ token }));
     } catch (err) {
@@ -57,7 +53,7 @@ const AuthForm = () => {
           checked={showSignUpForm}
           onChange={() => setShowSignUpForm(!showSignUpForm)}
         />
-        <div className="d-flex m-3">
+        <div className={`d-flex m-3 ${adminToggleVisibility}`}>
           <h5 className="text-light me-2">Student</h5>
           <input
             className={styles["switch"]}

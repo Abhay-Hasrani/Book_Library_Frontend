@@ -7,10 +7,16 @@ import BookDetail from "./components/books/book-detail/BookDetail";
 import RequestList from "./components/requests/RequestList";
 import MyBooksList from "./components/books/my-books/MyBooksList";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import axios from "axios";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const user = useSelector((state) => state.auth.user);
+
+  //set global header for axios
+  const myToken = localStorage.getItem("token");
+  axios.defaults.headers.common["Authorization"] = "Bearer " + myToken;
 
   return (
     <>
