@@ -1,49 +1,47 @@
-import RequestListItem from "./RequestListItem";
+// import RequestListItem from "./RequestListItem";
 import styles from "./RequestList.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllRequests } from "../../store/RequestsReducer";
-import { useEffect } from "react";
+import React, { Suspense, useCallback, useEffect, useMemo } from "react";
 import { getAllBooks } from "../../store/BooksReducer";
 import EmptyList from "../ui/empty-elements/EmptyList";
+import LoadingIndicator from "../ui/loading-indicator/LoadingIndicator";
+
+const LazyRequestListItem = React.lazy(() => import("./RequestListItem"));
 
 const RequestList = () => {
   const dispatch = useDispatch();
-  const allbooks = useSelector((state) => state.book.books);
+  // const allbooks = useSelector((state) => state.book.books);
   const requests = useSelector((state) => state.request.requests);
 
-  // console.log(allbooks)
-  // console.log(requests)
   // filtering books for all which request are present and pending
-  const pendingRequests = requests.filter(
-    (request) => request.status === "Pending"
+  const pendingRequests = useMemo(
+    () => requests.filter((request) => request.status === "Pending"),
+    [requests]
   );
-  const booksInRequests = pendingRequests.map((_request) => {
-    return allbooks
-      .filter((book) =>
-        pendingRequests.some((request) => request.book_id === book.id)
-      )
-      .map((book) => ({
-        ...book,
-        user_id: _request.user_id,
-        requestCreatedAt: _request.created_at,
-        requestUpdatedAt: _request.updated_at,
-      }));
-  });
 
-  useEffect(() => {
+  const fetchAllBooks = useCallback(() => {
     dispatch(getAllBooks());
+  }, [dispatch]);
+
+  const fetchAllRequests = useCallback(() => {
     dispatch(getAllRequests());
   }, [dispatch]);
 
-  const requestList = booksInRequests.map((book) => {
+  useEffect(() => {
+    fetchAllBooks();
+    fetchAllRequests();
+  }, [fetchAllBooks, fetchAllRequests]);
+
+  const requestList = pendingRequests.map((request) => {
     return (
-      <li key={Math.random()} className="m-2">
-        <RequestListItem book={book[0]} />
-      </li>
+      <Suspense key={request.created_at} fallback={<LoadingIndicator/>}>
+        <LazyRequestListItem request={request} />
+      </Suspense>
     );
   });
 
-  return requestList.length === 0 ? (
+  return pendingRequests.length === 0 ? (
     <EmptyList message="No Requests" />
   ) : (
     <ul className={styles["request-list"]}>{requestList}</ul>

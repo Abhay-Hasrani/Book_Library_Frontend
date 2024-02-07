@@ -1,4 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {  createSlice } from "@reduxjs/toolkit";
+import { createSelector } from "reselect";
 import axios from "axios";
 import BookUrls from "../utils/BookUrl";
 
@@ -18,6 +19,13 @@ const BooksSlice = createSlice({
     },
   },
 });
+
+//Selector for getting single book from state
+export const selectBookById = (book_id) =>
+  createSelector(
+    (state) => state.book.books,
+    (books) => books.find((book) => book.id === book_id)
+  );
 
 // Async action creators Reduxx thunk
 

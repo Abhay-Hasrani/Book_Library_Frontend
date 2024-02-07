@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Book from "./Book";
 import styles from "./BookList.module.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,22 +10,32 @@ import EmptyList from "../../ui/empty-elements/EmptyList";
 const BookList = () => {
   const dispatch = useDispatch();
   const books = useSelector((state) => state.book.books);
+  const [filterText, setFilterText] = useState("");
 
   useEffect(() => {
     dispatch(getAllBooks());
   }, [dispatch]);
 
-  const bookList = books.map((book) => {
-    return (
-      <li key={book.id} className="m-2">
-        <Book book={book} />
-      </li>
-    );
-  });
+  const bookList = books
+    .filter(
+      (book) =>
+        filterText === "" ||
+        book.title.toLowerCase().includes(filterText.toLowerCase())
+    )
+    .map((book) => {
+      return (
+        <li key={book.id} className="m-2">
+          <Book book={book} />
+        </li>
+      );
+    });
   return bookList.length === 0 ? (
     <EmptyList message="No Books Available!!!" />
   ) : (
-    <ul className={styles["book-list"]}>{bookList}</ul>
+    <>
+      <input className={styles["search"]} type="text" placeholder="Search By Title" onChange={(e) => setFilterText(e.target.value)} />
+      <ul className={styles["book-list"]}>{bookList}</ul>
+    </>
   );
 };
 
