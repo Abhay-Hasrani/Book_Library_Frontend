@@ -26,7 +26,6 @@ const RequestsSlice = createSlice({
  * */
 export const getAllRequests = () => async (dispatch) => {
   const res = await axios.get(BookUrls.REQUESTS_URL);
-  // console.log(res.data);
   dispatch(requestsActions.replaceRequests({ requests: res.data }));
 };
 
@@ -38,7 +37,6 @@ export const postRequest = (bookId) => async (dispatch) => {
     const res = await axios.post(BookUrls.POST_REQUEST_URL, {
       book_id: bookId,
     });
-    // console.log(res.data);
     dispatch(requestsActions.addRequest({ request: res.data.user_book }));
     alert("Request Sent Successfully");
   } catch (error) {

@@ -7,3 +7,8 @@
     flex-wrap: wrap; /* Allow items to wrap to the next line */
     justify-content: center;
   }
+
+  .search{
+    margin:1rem 0 1rem  20rem; 
+    width: 20rem;
+  }

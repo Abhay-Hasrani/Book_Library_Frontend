@@ -2,112 +2,117 @@ import { useNavigate } from "react-router-dom";
 import styles from "./RequestListItem.module.css";
 import axios from "axios";
 import BookUrls from "../../utils/BookUrl";
-import { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { formatDateTime } from "../../utils/DateTimeConverter";
-import LoadingIndicator from "../ui/loading-indicator/LoadingIndicator";
+import { useSelector } from "react-redux";
+import { selectBookById } from "../../store/BooksReducer";
 
 const RequestListItem = (props) => {
-  const bookObj = props.book;
+  const request = props.request;
   const navigate = useNavigate();
-  const bookId = bookObj.id;
-  const user_id = bookObj.user_id;
 
+  const book_id = request.book_id;
+  const user_id = request.user_id;
+  const user = request.user;
+
+  const book = useSelector(selectBookById(book_id));
   //0: show both accept and reject
   //1: show only accepted
   //2: show only rejected
   const [showButtonTag, setShowButtonTag] = useState(0);
-  const [user, setUser] = useState(null);
 
   function detailsClickHandler() {
-    navigate(`/books/${bookObj.id}`);
+    navigate(`/books/${book.id}`);
   }
 
   /**
    *
    * @param {String} new_status - New Status for the book request
-   * @param {number} book_id - book_id for which status is to be changed
+   * Also reuires user_id and book_id
    * Changes the status to ("Accepted","Rejected","Pending","Returned") in the database
    */
-  const changeRequestStatus = async (new_status, book_id) => {
-    try {
-      const requestData = {
-        book_id: book_id,
-        status: new_status,
-      };
-      const res = await axios.put(BookUrls.PUT_REQUEST_STATUS_URL, requestData);
-      console.log(res.data);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  const changeRequestStatus = useCallback(
+    async (new_status) => {
+      try {
+        const requestData = {
+          book_id: book_id,
+          user_id: user_id,
+          status: new_status,
+        };
+        await axios.put(BookUrls.PUT_REQUEST_STATUS_URL, requestData);
+      } catch (error) {
+        console.log(error.message);
+      }
+    },
+    [book_id, user_id]
+  );
 
-  const acceptClickHandler = () => {
-    changeRequestStatus("Accepted", bookId);
+  const acceptClickHandler = useCallback(() => {
+    changeRequestStatus("Accepted");
     setShowButtonTag(1);
-  };
+  }, [changeRequestStatus]);
 
-  const rejectClickHandler = () => {
-    changeRequestStatus("Rejected", bookId);
+  const rejectClickHandler = useCallback(() => {
+    changeRequestStatus("Rejected");
     setShowButtonTag(2);
-  };
+  }, [changeRequestStatus]);
 
-  useEffect(() => {
-    const getUserByID = async (user_id) => {
-      const res = await axios.get(BookUrls.USER_URL + user_id);
-      setUser(res.data);
-    };
-    getUserByID(user_id);
-  }, [user_id]);
-
-  return !user ? (
-    <LoadingIndicator />
-  ) : (
-    <div className={styles.wrapper}>
-      <div className={styles["book-text"]}>
-        <h1>{bookObj.title}</h1>
-        <h2>
-          by {bookObj.author}
-          <br />
-          <span>{bookObj.launched}</span>
-        </h2>
-        <div className={styles["user-detail"]}>
-          {` Sent by : ${user.username}`}
-          <br />
-          {` Received : ${formatDateTime(bookObj.requestCreatedAt)}`}
-          <br />
-          {` Updated : ${formatDateTime(bookObj.requestUpdatedAt)}`}
+  return (
+    user &&
+    book && (
+      <li key={request.created_at} className="m-2">
+        <div className={styles.wrapper}>
+          <div className={styles["book-text"]}>
+            <h1>{book.title}</h1>
+            <h2>
+              by {book.author}
+              <br />
+              <span>{book.launched}</span>
+            </h2>
+            <div className={styles["user-detail"]}>
+              {` Sent by : ${user.username}`}
+              <br />
+              {` Received : ${formatDateTime(request.created_at)}`}
+              <br />
+              {` Updated : ${formatDateTime(request.updated_at)}`}
+            </div>
+          </div>
+          <div className={styles["book-btn-box"]}>
+            {showButtonTag !== 2 && (
+              <button
+                type="button"
+                className={
+                  showButtonTag === 1
+                    ? styles["accept-active"]
+                    : styles["accept"]
+                }
+                onClick={acceptClickHandler}
+              >
+                {showButtonTag === 1 ? "Accepted" : "Accept"}
+              </button>
+            )}
+            {showButtonTag === 0 && (
+              <button type="button" onClick={detailsClickHandler}>
+                Details
+              </button>
+            )}
+            {showButtonTag !== 1 && (
+              <button
+                type="button"
+                className={
+                  showButtonTag === 2
+                    ? styles["reject-active"]
+                    : styles["reject"]
+                }
+                onClick={rejectClickHandler}
+              >
+                {showButtonTag === 2 ? "Rejected" : "Reject"}
+              </button>
+            )}
+          </div>
         </div>
-      </div>
-      <div className={styles["book-btn-box"]}>
-        {showButtonTag !== 2 && (
-          <button
-            type="button"
-            className={
-              showButtonTag === 1 ? styles["accept-active"] : styles["accept"]
-            }
-            onClick={acceptClickHandler}
-          >
-            {showButtonTag === 1 ? "Accepted" : "Accept"}
-          </button>
-        )}
-        {showButtonTag === 0 && (
-          <button type="button" onClick={detailsClickHandler}>
-            Details
-          </button>
-        )}
-        {showButtonTag !== 1 && (
-          <button
-            type="button"
-            className={
-              showButtonTag === 2 ? styles["reject-active"] : styles["reject"]
-            }
-            onClick={rejectClickHandler}
-          >
-            {showButtonTag === 2 ? "Rejected" : "Reject"}
-          </button>
-        )}
-      </div>
-    </div>
+      </li>
+    )
   );
 };
-export default RequestListItem;
+export default React.memo(RequestListItem);

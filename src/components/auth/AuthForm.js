@@ -16,7 +16,6 @@ const AuthForm = () => {
     const formData = new FormData(e.target);
     try {
       const res = await axios.post(BookUrls.LOGIN_URL, formData);
-      // console.log(res.data);
       const token = res.data.access_token;
       dispatch(authActions.login({ token }));
     } catch (err) {
@@ -31,7 +30,6 @@ const AuthForm = () => {
     formData.append("role", role);
     const userData = {};
     for (const [name, value] of formData.entries()) userData[name] = value;
-    console.log(userData);
     try {
       await axios.post(BookUrls.SIGNUP_URL, userData);
       alert("User Created Successfully. Please Login!!!");

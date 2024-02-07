@@ -1,10 +1,13 @@
 import { useDispatch } from "react-redux";
-import MyBooksListItem from "./MyBooksListItem";
+// import MyBooksListItem from "./MyBooksListItem";
 import styles from "./MyBooksList.module.css";
-import { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import axios from "axios";
 import BookUrls from "../../../utils/BookUrl";
 import EmptyList from "../../ui/empty-elements/EmptyList";
+import LoadingIndicator from "../../ui/loading-indicator/LoadingIndicator";
+
+const LazyRequestListItem = React.lazy(() => import("./MyBooksListItem"));
 
 const MyBooksList = () => {
   const dispatch = useDispatch();
@@ -22,11 +25,11 @@ const MyBooksList = () => {
     getMyRequests();
   }, [dispatch]);
 
-  const myBookList = myRequests.map((request, index) => {
+  const myBookList = myRequests.map((request) => {
     return (
-      <li key={index} className="m-2">
-        <MyBooksListItem request={request} />
-      </li>
+      <Suspense key={request.created_at} fallback={<LoadingIndicator />}>
+        <LazyRequestListItem request={request} />
+      </Suspense>
     );
   });
 
