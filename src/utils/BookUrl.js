@@ -13,6 +13,7 @@ BookUrls.BOOK_URL = BookUrls.BASE_URL + "/books/" // (+ bookId) add book id para
 
 //request
 BookUrls.REQUESTS_URL  = BookUrls.BASE_URL + "/requests"
+BookUrls.POST_REQUEST_URL  = BookUrls.REQUESTS_URL + "/post-request"
 BookUrls.PUT_REQUEST_STATUS_URL  = BookUrls.REQUESTS_URL + "/put-request-status"
 
 

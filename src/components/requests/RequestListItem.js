@@ -1,7 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./RequestListItem.module.css";
 
 const RequestListItem = (props) => {
   const bookObj = props.book;
+
+  const navigate = useNavigate();
+
+  function detailsClickHandler() {
+    navigate(`/books/${bookObj.id}`);
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -17,7 +24,7 @@ const RequestListItem = (props) => {
         <button type="button" className={styles["accept"]}>
           Accept
         </button>
-        <button type="button">Details</button>
+        <button type="button" onClick={detailsClickHandler}>Details</button>
         <button type="button" className={styles["reject"]}>
           Reject
         </button>

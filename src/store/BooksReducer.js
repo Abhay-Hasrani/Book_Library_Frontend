@@ -14,7 +14,7 @@ const BooksSlice = createSlice({
       state.books = action.payload.books;
     },
     addBook: (state, action) => {
-      state.books = [...state.books, action.payload.book];
+      state.books = [action.payload.book, ...state.books];
     },
   },
 });
@@ -26,7 +26,6 @@ const BooksSlice = createSlice({
  * */
 export const getAllBooks = () => async (dispatch) => {
   const res = await axios.get(BookUrls.BOOKS_URL);
-  console.log(res.data);
   dispatch(booksActions.replaceBooks({ books: res.data }));
 };
 

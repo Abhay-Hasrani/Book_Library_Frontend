@@ -14,7 +14,7 @@ const RequestsSlice = createSlice({
       state.requests = action.payload.requests;
     },
     addRequest: (state, action) => {
-        state.requests = [...state.requests, action.payload.request];
+      state.requests = [action.payload.request, ...state.requests];
     },
   },
 });
@@ -26,16 +26,23 @@ const RequestsSlice = createSlice({
  * */
 export const getAllRequests = () => async (dispatch) => {
   const res = await axios.get(BookUrls.REQUESTS_URL);
-  console.log(res.data)
-  // dispatch(requestsActions.replaceRequests({ requests: res.data }));
+  // console.log(res.data);
+  dispatch(requestsActions.replaceRequests({ requests: res.data }));
 };
 
 /**
  * Add request to the backend->database and add to redux state
  * */
-export const postRequest = (request) => async (dispatch) => {
-  const res = await axios.post(BookUrls.POST_BOOK_URL, request);
-  dispatch(requestsActions.addRequest({ request: res.data.request }));
+export const postRequest = (bookId) => async (dispatch) => {
+  try {
+    const res = await axios.post(BookUrls.POST_REQUEST_URL, { book_id: bookId });
+    // console.log(res.data);
+    dispatch(requestsActions.addRequest({ request: res.data.user_book }));
+  } catch (error) {
+    console.log(error)
+    alert("Request already exists")
+  }
+  // dispatch(requestsActions.addRequest({ request: res.data.request }));
 };
 
 export const requestsActions = RequestsSlice.actions;

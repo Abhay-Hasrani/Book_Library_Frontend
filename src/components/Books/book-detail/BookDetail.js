@@ -5,8 +5,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import BookUrls from "../../../utils/BookUrl";
 import LoadingIndicator from "../../UI/loading-indicator/LoadingIndicator";
+import { useDispatch } from "react-redux";
+import { postRequest } from "../../../store/RequestsReducer";
 
 const BookDetail = () => {
+  const dispatch = useDispatch();
   const { bookId } = useParams();
   const [book, setBook] = useState(null);
 
@@ -17,6 +20,10 @@ const BookDetail = () => {
     };
     getBookByID(bookId);
   }, [bookId]);
+
+  const requestClickHandler = () => {
+    dispatch(postRequest(bookId));
+  };
 
   return !book ? (
     <LoadingIndicator />
@@ -29,10 +36,13 @@ const BookDetail = () => {
           height="420"
           width="327"
         />
-        <button className={styles["book-add-btn"]} type="button">
+        <button
+          className={styles["book-add-btn"]}
+          type="button"
+          onClick={requestClickHandler}
+        >
           Request
         </button>
-        <div className={styles.available}>(5 left)</div>
       </div>
       <div className={styles["book-info"]}>
         <div className={styles["book-text"]}>

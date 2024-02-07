@@ -32,7 +32,7 @@ const Header = () => {
         {isLoggedIn && (
           <Nav className={styles["custom-nav"]}>
             <Nav.Link as={NavLink} to="/">
-              Home
+              All Books
             </Nav.Link>
             <Nav.Link as={NavLink} to="/my-books">
               My Books
