@@ -11,6 +11,7 @@ const RequestListItem = (props) => {
   const request = props.request;
   const navigate = useNavigate();
 
+  const request_id = request.id;
   const book_id = request.book_id;
   const user_id = request.user_id;
   const user = request.user;
@@ -35,6 +36,7 @@ const RequestListItem = (props) => {
     async (new_status) => {
       try {
         const requestData = {
+          id: request_id,
           book_id: book_id,
           user_id: user_id,
           status: new_status,
@@ -44,7 +46,7 @@ const RequestListItem = (props) => {
         console.log(error.message);
       }
     },
-    [book_id, user_id]
+    [book_id, user_id,request_id]
   );
 
   const acceptClickHandler = useCallback(() => {

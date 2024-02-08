@@ -11,6 +11,7 @@ const MyBooksListItem = (props) => {
   const [status, setStatus] = useState(myRequest.status);
   const navigate = useNavigate();
 
+  const request_id = myRequest.id
   const book_id = myRequest.book_id;
   const user_id = myRequest.user_id;
 
@@ -25,13 +26,13 @@ const MyBooksListItem = (props) => {
   /**
    *
    * @param {String} new_status  New Status for the book request
-   * @param {number} book_id -- book_id for which status is to be changed
-   *
+   * Also requires request_id, book_id, user_id
    * Changes the status to ("Accepted","Rejected","Pending","Returned") in the database
    */
-  const changeRequestStatus = async (new_status, book_id, user_id) => {
+  const changeRequestStatus = async (new_status) => {
     try {
       const requestData = {
+        id: request_id,
         book_id: book_id,
         user_id: user_id,
         status: new_status,
@@ -78,7 +79,7 @@ const MyBooksListItem = (props) => {
               type="button"
               className={buttonStyle}
               disabled={status !== "Accepted"}
-              onClick={() => changeRequestStatus("Returned", book_id, user_id)}
+              onClick={() => changeRequestStatus("Returned")}
             >
               {status === "Accepted" ? "Return" : status}
             </button>
