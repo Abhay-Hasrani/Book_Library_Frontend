@@ -1,16 +1,26 @@
-import { useEffect, useState } from "react";
-import Book from "./Book";
-import styles from "./BookList.module.css";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllBooks } from "../../../store/BooksReducer";
 import EmptyList from "../../ui/empty-elements/EmptyList";
-
-// "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSVzWzrz-HW9e1PjQ_vPrZmWKgkrf2OQyg3qf6J4zBTlt82BF_s"
+import Book from "./Book";
+import styles from "./BookList.module.css";
 
 const BookList = () => {
   const dispatch = useDispatch();
   const books = useSelector((state) => state.book.books);
   const [filterText, setFilterText] = useState("");
+  
+  // Debounce function
+  const debounce = (func, delay) => {
+    let timer;
+    return (...args) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => func(...args), delay);
+    };
+  };
+
+  // Defined a debounced version of setFilterText
+  const debouncedSetFilterText = debounce(setFilterText, 300);
 
   useEffect(() => {
     dispatch(getAllBooks());
@@ -22,19 +32,26 @@ const BookList = () => {
         filterText === "" ||
         book.title.toLowerCase().includes(filterText.toLowerCase())
     )
-    .map((book) => {
-      return (
-        <li key={book.id} className="m-2">
-          <Book book={book} />
-        </li>
-      );
-    });
-  return bookList.length === 0 ? (
-    <EmptyList message="No Books Available!!!" />
-  ) : (
+    .map((book) => (
+      <li key={book.id} className="m-2">
+        <Book book={book} />
+      </li>
+    ));
+
+  return (
     <>
-      <input className={styles["search"]} type="text" placeholder="Search By Title" onChange={(e) => setFilterText(e.target.value)} />
-      <ul className={styles["book-list"]}>{bookList}</ul>
+      <div className={styles["search"]}>
+        <input
+          type="text"
+          placeholder="Search By Title"
+          onChange={(e) => debouncedSetFilterText(e.target.value)}
+        />
+      </div>
+      {bookList.length === 0 ? (
+        <EmptyList message="No Books Available!!!" />
+      ) : (
+        <ul className={styles["book-list"]}>{bookList}</ul>
+      )}
     </>
   );
 };

@@ -8,7 +8,18 @@
     justify-content: center;
   }
 
-  .search{
-    margin:1rem 0 1rem  20rem; 
-    width: 20rem;
+  .search {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    background-color: antiquewhite;
+  }
+  
+  .search input[type="text"] {
+    width: 15rem;
+    padding: 10px;
+    margin: 2rem 0 0 2rem;
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
