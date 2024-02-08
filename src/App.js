@@ -7,7 +7,6 @@ import BookDetail from "./components/books/book-detail/BookDetail";
 import RequestList from "./components/requests/RequestList";
 import MyBooksList from "./components/books/my-books/MyBooksList";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import axios from "axios";
 
 function App() {

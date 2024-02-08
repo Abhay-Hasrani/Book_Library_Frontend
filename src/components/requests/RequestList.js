@@ -1,4 +1,3 @@
-// import RequestListItem from "./RequestListItem";
 import styles from "./RequestList.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllRequests } from "../../store/RequestsReducer";
@@ -11,7 +10,6 @@ const LazyRequestListItem = React.lazy(() => import("./RequestListItem"));
 
 const RequestList = () => {
   const dispatch = useDispatch();
-  // const allbooks = useSelector((state) => state.book.books);
   const requests = useSelector((state) => state.request.requests);
 
   // filtering books for all which request are present and pending

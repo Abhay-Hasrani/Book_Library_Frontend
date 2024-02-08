@@ -19,6 +19,7 @@ const AuthForm = () => {
       const token = res.data.access_token;
       dispatch(authActions.login({ token }));
     } catch (err) {
+      alert(err.response.data.detail)
       console.log(err);
     }
   };
@@ -37,6 +38,7 @@ const AuthForm = () => {
       e.target.reset();
       // console.log("user created redirect to login ",res.data );
     } catch (err) {
+      alert("Cannot Signin: ", err.message)
       console.log(err);
     }
   };
