@@ -1,7 +1,6 @@
 // authSlice.js
 
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
 // Load initial state from local storage if available

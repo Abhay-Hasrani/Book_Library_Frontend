@@ -5,6 +5,7 @@ import React, { Suspense, useCallback, useEffect, useMemo } from "react";
 import { getAllBooks } from "../../store/BooksReducer";
 import EmptyList from "../ui/empty-elements/EmptyList";
 import LoadingIndicator from "../ui/loading-indicator/LoadingIndicator";
+import { Status } from "../../utils/Enums";
 
 const LazyRequestListItem = React.lazy(() => import("./RequestListItem"));
 
@@ -14,7 +15,7 @@ const RequestList = () => {
 
   // filtering books for all which request are present and pending
   const pendingRequests = useMemo(
-    () => requests.filter((request) => request.status === "Pending"),
+    () => requests.filter((request) => request.status === Status.PENDING),
     [requests]
   );
 

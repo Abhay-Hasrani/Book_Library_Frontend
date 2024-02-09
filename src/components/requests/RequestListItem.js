@@ -6,6 +6,7 @@ import React, { useCallback, useState } from "react";
 import { formatDateTime } from "../../utils/DateTimeConverter";
 import { useSelector } from "react-redux";
 import { selectBookById } from "../../store/BooksReducer";
+import { Status } from "../../utils/Enums";
 
 const RequestListItem = (props) => {
   const request = props.request;
@@ -46,16 +47,16 @@ const RequestListItem = (props) => {
         console.log(error.message);
       }
     },
-    [book_id, user_id,request_id]
+    [book_id, user_id, request_id]
   );
 
   const acceptClickHandler = useCallback(() => {
-    changeRequestStatus("Accepted");
+    changeRequestStatus(Status.ACCEPTED);
     setShowButtonTag(1);
   }, [changeRequestStatus]);
 
   const rejectClickHandler = useCallback(() => {
-    changeRequestStatus("Rejected");
+    changeRequestStatus(Status.REJECTED);
     setShowButtonTag(2);
   }, [changeRequestStatus]);
 
@@ -90,7 +91,7 @@ const RequestListItem = (props) => {
                 }
                 onClick={acceptClickHandler}
               >
-                {showButtonTag === 1 ? "Accepted" : "Accept"}
+                {showButtonTag === 1 ? Status.ACCEPTED : "Accept"}
               </button>
             )}
             {showButtonTag === 0 && (
@@ -108,7 +109,7 @@ const RequestListItem = (props) => {
                 }
                 onClick={rejectClickHandler}
               >
-                {showButtonTag === 2 ? "Rejected" : "Reject"}
+                {showButtonTag === 2 ? Status.REJECTED : "Reject"}
               </button>
             )}
           </div>

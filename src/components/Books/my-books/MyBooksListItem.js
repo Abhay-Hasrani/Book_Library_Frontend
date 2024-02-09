@@ -4,6 +4,7 @@ import axios from "axios";
 import BookUrls from "../../../utils/BookUrl";
 import { formatDateTime } from "../../../utils/DateTimeConverter";
 import { useNavigate } from "react-router-dom";
+import { Status } from "../../../utils/Enums";
 
 const MyBooksListItem = (props) => {
   const myRequest = props.request;
@@ -11,7 +12,7 @@ const MyBooksListItem = (props) => {
   const [status, setStatus] = useState(myRequest.status);
   const navigate = useNavigate();
 
-  const request_id = myRequest.id
+  const request_id = myRequest.id;
   const book_id = myRequest.book_id;
   const user_id = myRequest.user_id;
 
@@ -38,7 +39,7 @@ const MyBooksListItem = (props) => {
         status: new_status,
       };
       await axios.put(BookUrls.PUT_REQUEST_STATUS_URL, requestData);
-      setStatus("Returned");
+      setStatus(Status.RETURNED);
     } catch (error) {
       console.log(error.message);
     }
@@ -49,9 +50,9 @@ const MyBooksListItem = (props) => {
   }
 
   let buttonStyle = styles["active"];
-  if (status === "Accepted") buttonStyle = styles["accepted"];
-  else if (status === "Rejected") buttonStyle = styles["rejected"];
-  else if (status === "Returned") buttonStyle = styles["returned"];
+  if (status === Status.ACCEPTED) buttonStyle = styles["accepted"];
+  else if (status === Status.REJECTED) buttonStyle = styles["rejected"];
+  else if (status === Status.RETURNED) buttonStyle = styles["returned"];
   else buttonStyle = styles["pending"];
 
   return (
@@ -78,10 +79,10 @@ const MyBooksListItem = (props) => {
             <button
               type="button"
               className={buttonStyle}
-              disabled={status !== "Accepted"}
-              onClick={() => changeRequestStatus("Returned")}
+              disabled={status !== Status.ACCEPTED}
+              onClick={() => changeRequestStatus(Status.RETURNED)}
             >
-              {status === "Accepted" ? "Return" : status}
+              {status === Status.ACCEPTED ? "Return" : status}
             </button>
           </div>
         </div>
